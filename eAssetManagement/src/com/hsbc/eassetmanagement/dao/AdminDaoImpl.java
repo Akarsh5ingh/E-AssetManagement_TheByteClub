@@ -1,5 +1,6 @@
 package com.hsbc.eassetmanagement.dao;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -30,7 +31,12 @@ public class AdminDaoImpl implements AdminDao {
     }
     
 	@Override
-	public boolean addNewAsset() {
+	public boolean addNewAsset(String assetName, String assetType, 
+			String description, LocalDate dateAdded, 
+			boolean isAvailable, int lendingPeriod, 
+			double lateReturnFee, 
+			int noOfDaysBanned, 
+			LocalDate dueDate) {
 		// TODO Auto-generated method stub
 		long userId=generateUserId();
 		if(userId==-1)
@@ -39,6 +45,8 @@ public class AdminDaoImpl implements AdminDao {
 			//if userid is not generated
 			throw new UserIDNotgeneratedException("User Id is no generated");
 		}
+		
+		
 		
 		return false;
 	}
