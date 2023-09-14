@@ -1,0 +1,113 @@
+/* styles.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #000000;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 1%;
+}
+
+.menu-icon {
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 1%;
+}
+
+.menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #000000;
+    z-index: 1;
+    width: 200px;
+}
+
+.menu.show-menu {
+    display: flex;
+}
+
+.menu a {
+    display: block;
+    color: white;
+    text-align: center;
+    font-size: larger;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    background-color: #dfdfdf;
+    color: black;
+}
+
+h2 {
+    margin-top: 8%;
+    margin-left: 45%;
+    font-weight: bold;
+    font-size: xx-large;
+    transition: all 0.6s cubic-bezier(0.30, 0.30, 0.26, 1.55);
+}
+
+.borrowed-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #000000;
+    border-radius: 15px;
+    margin-left: 27%;
+    margin-top: 2%;
+    width: 40%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    padding-left: 3%;
+    border: 1px solid #ccc;
+    color: #dfdfdf;
+}
+
+.item-info {
+    width: 50%;
+    font-size: large;
+}
+
+.item-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+}
+
+.btnView,
+.btnExtend {
+    margin-top: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+    font-size: large;
+}
+
+.btnView {
+    background-color: #e3e3e3;
+}
+
+.btnExtend {
+    background-color: #f20d0d;
+}
+
+.wrapper {
+    display: none;
+}
