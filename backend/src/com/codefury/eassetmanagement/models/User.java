@@ -17,6 +17,10 @@ public class User {
 		this.password = password;
 	}
 
+	public User() {
+		
+	}
+
 	public String getTelephone() {
 		return telephone;
 	}
@@ -47,6 +51,14 @@ public class User {
 
 	public String getUserId() {
 		return userId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

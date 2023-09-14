@@ -1,22 +1,25 @@
 package com.codefury.eassetmanagement.views;
 
-import java.sql.Date;
-
-import com.codefury.eassetmanagement.bl.AdminBLImpl;
-import com.codefury.eassetmanagement.dao.AdminDao;
-import com.codefury.eassetmanagement.dao.AdminDaoImpl;
-import com.codefury.eassetmanagement.dao.BorrowerDao;
-import com.codefury.eassetmanagement.dao.BorrowerDaoImpl;
+import java.util.Scanner;
 
 public class App {
 
 	public static void main(String[] args) {
-		AdminDao a = new AdminDaoImpl();
-		a.addNewAsset("Laptop", "IT", "hbmh", Date.valueOf("1900-11-11"), false, 0, 0, 0);
+		Scanner sc = new Scanner(System.in);
 		
-		BorrowerDao b= new BorrowerDaoImpl();
-//		b.isUserBanned("16612699");
-		b.borrowAsset(null, null);
+		System.out.println("Enter User Type: (1-Admin / 2-Borrower)\n");
+		int choice = sc.nextInt();
+		
+		if(choice==1) {
+			AdminApp.main(args);
+		}
+		else if(choice==2) {
+			BorrowerApp.main(args);
+		}
+		else {
+			System.out.println("Invalid user type");
+		}
+		
+		sc.close();
 	}
-
 }

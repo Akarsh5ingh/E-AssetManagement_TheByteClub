@@ -106,6 +106,14 @@ public class Asset {
 	public void setBorrowedDate(Date date) {
 		this.borrowedDate = date;
 	}
+	@Override
+	public String toString() {
+		return "Asset [uniqueId=" + uniqueId + ", assetName=" + assetName + ", assetType=" + assetType
+				+ ", description=" + description + ", dateAdded=" + dateAdded + ", isAvailable=" + isAvailable
+				+ ", lendingPeriod=" + lendingPeriod + ", lateReturnFee=" + lateReturnFee + ", noOfDaysBanned="
+				+ noOfDaysBanned + ", borrowerId=" + borrowerId + ", borrowedDate=" + borrowedDate + ", dueDate="
+				+ dueDate + "]";
+	}
 	
 	
 }
