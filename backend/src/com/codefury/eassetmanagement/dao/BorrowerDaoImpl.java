@@ -14,6 +14,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import com.codefury.eassetmanagement.exceptions.UserBannedException;
+import com.codefury.eassetmanagement.exceptions.UserRegistrationException;
 import com.codefury.eassetmanagement.helper.MySQLHelper;
 import com.codefury.eassetmanagement.models.Asset;
 import com.codefury.eassetmanagement.models.Borrower;
@@ -36,7 +38,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 
 	@Override
 	public boolean singleUserRegistration(String name, String telephone, 
-			String email, String password) {
+			String email, String password) throws UserBannedException {
 		String borrowerId = generateUserId();
 		// create statement
 		try {
@@ -56,7 +58,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			rows=this.statement.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
 			//create custom exception
-			System.out.println(e);
+			 throw new UserBannedException("User is banned due to overdue assets");
 		}
 		return false;
 	}
@@ -74,7 +76,13 @@ public class BorrowerDaoImpl implements BorrowerDao {
 		//else--> //get list of available assets
 		//allocate one asset-->add userid in asset row
 		
-		ResultSet result = getAssetList(assetType);
+		ResultSet result = null;
+		try {
+			result = getAssetList(assetType);
+		} catch (UserRegistrationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(result!=null) {
 			Asset asset=getFirstAsset(result, borrower.getUserId());
@@ -151,7 +159,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 	}
 	
 	
-	private ResultSet getAssetList(String AssetType) {
+	private ResultSet getAssetList(String AssetType) throws UserRegistrationException {
 		ResultSet result = null;
 		try {
 			conn = MySQLHelper.getConnection();
@@ -162,8 +170,9 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			result = this.statement.executeQuery();			
 			
 		} catch (ClassNotFoundException | SQLException e) {
-			// create custom exception
-			System.out.println(e);
+			
+			    // Throw the custom exception
+			    throw new UserRegistrationException("User registration failed: Borrower ID not generated");
 		}
 		return result;
 	}

@@ -73,7 +73,6 @@ public class AdminDaoImpl implements AdminDao {
 		} catch (ClassNotFoundException | SQLException e) {
 			//custom exception
 			throw new UserIDNotgeneratedException("User Id is not generated");
-			System.out.println(e);
 		}
 		return false;
 	}
@@ -98,7 +97,7 @@ public class AdminDaoImpl implements AdminDao {
             	hashedUserIds.add(userIdString);
                 
                 System.out.println("Generated User ID: " + userId);
-                return userId;
+                return finalUserId;
             }
 	}
         
