@@ -1,0 +1,82 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.heading-container {
+    font-size: 29px; /* Adjust the font size as needed */
+    text-align: center;
+    background-color: red;
+}
+
+.heading-container h2 {
+    font-size: 29px; /* Adjust the font size as needed */
+    color: white;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#searchInput {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#searchButton {
+    background-color: #f20d0d; /* Match the button background color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: larger; /* Match the button font size */
+    transition: all 0.6s cubic-bezier(0.30, 0.30, 0.26, 1.55);
+}
+
+#searchButton:hover {
+    background-color: #dfdfdf; /* Match the button hover background color */
+    color: black; /* Match the button hover text color */
+}
+
+#resultsTable {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden;
+    
+}
+
+#resultsTable th, #resultsTable td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+#resultsTable th {
+    background-color: #f20d0d; /* Match the table header background color */
+    color: white;
+}
+
+/* Style for the navigation bar links (optional) */
+.navbar {
+    /* Your navbar styles here */
+}
+
+.navbar a {
+    /* Your navbar link styles here */
+}
+
+.navbar a:hover {
+    /* Your navbar link hover styles here */
+}
+
