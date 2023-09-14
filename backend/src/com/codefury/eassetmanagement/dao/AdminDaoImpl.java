@@ -71,7 +71,8 @@ public class AdminDaoImpl implements AdminDao {
 				
 			rows=this.statement.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
-			//create custom exception
+			//custom exception
+			throw new UserIDNotgeneratedException("User Id is not generated");
 			System.out.println(e);
 		}
 		return false;
