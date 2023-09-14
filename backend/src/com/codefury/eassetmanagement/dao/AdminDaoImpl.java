@@ -17,6 +17,7 @@ import java.util.Set;
 
 import com.codefury.eassetmanagement.exceptions.UserIDNotgeneratedException;
 import com.codefury.eassetmanagement.helper.MySQLHelper;
+import com.codefury.eassetmanagement.models.Asset;
 
 public class AdminDaoImpl implements AdminDao {
 
@@ -132,6 +133,26 @@ public class AdminDaoImpl implements AdminDao {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public boolean addNewAsset(Asset asset) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String generateUserId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addNewAsset(String userId, String assetName, String assetType, String description,
+			java.util.Date dateAdded, boolean isAvailable, int lendingPeriod, double lateReturnFee,
+			int noOfDaysBanned) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
