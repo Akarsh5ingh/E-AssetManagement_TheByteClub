@@ -115,8 +115,8 @@ public class AdminDaoImpl implements AdminDao {
 			if(rows>0)
 				return true;
 		} catch (ClassNotFoundException | SQLException e) {
-			//create custom exception
-			System.out.println(e);
+			//custom exception
+			throw new UserIDNotgeneratedException("User Id is not generated");
 		}
 		return false;
 	}
@@ -134,6 +134,7 @@ public class AdminDaoImpl implements AdminDao {
 		long userId = -1;
 		String finalUserId=null;
 		for (int attempt = 0; attempt < maxAttempts; attempt++) {
+<<<<<<< HEAD
 			userId = random.nextInt(maxUserId) + 10000000; // Generate a random 8 digit user ID
 			if (!usedIds.contains(userId)) {
 				usedIds.add(userId);
@@ -142,33 +143,47 @@ public class AdminDaoImpl implements AdminDao {
 				return finalUserId;
 			}
 		}
+=======
+            userId = random.nextInt(maxUserId) + 10000000; //Generate a random 8 digit user ID 
+            if (!hashedUserIds.contains(userId)) {
+            	String userIdString =Long.toString(userId);
+            	hashedId(userIdString);
+            	hashedUserIds.add(userIdString);
+                
+                System.out.println("Generated User ID: " + userId);
+                return finalUserId;
+            }
+	}
+        
+>>>>>>> 4013569d1039b865dfe0749ae739382380694cfc
 
 		System.out.println("Failed to generate a unique User ID after " + maxAttempts + " attempts.");
 		return finalUserId;
 	
 }
 
-	private String hashedId(String userId) {
+	public String hashedId(String userId) {
 		String hashedId = null;
 		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");// using message digest to get the functionality for
-																	// hashing data and specifying the SHA-256 algorithm
-
-			byte[] hashByte = md.digest(userId.getBytes(StandardCharsets.UTF_8));// we use md to hash the password. We
-																					// convert the password string into
-																					// bytes using UTF-8 encoding
-			// the md.digest is called to compute the hash of these bytes, the result is a
-			// array of bytes that stores the password
-
-			// convert the byte array to a hexadecimal representation
+			MessageDigest md = MessageDigest.getInstance("SHA-256");//using message digest to get the functionality for hashing data and specifying the SHA-256 algorithm
+		
+			byte[] hashByte = md.digest(userId.getBytes(StandardCharsets.UTF_8));//we use md to hash the password. We convert the password string into bytes using UTF-8 encoding
+			//the md.digest is called to compute the hash of these bytes, the result is a array of bytes that stores the password
+			
+			//convert the byte array to a hexadecimal representation
 			StringBuilder hexHash = new StringBuilder();
-			for (byte b : hashByte) { // iterating through the byte array
-				hexHash.append(String.format("%20x", b));// formatting each byte as a two-character hexadecimal string
-															// using string.format
+			for(byte b: hashByte) { //iterating through the byte array
+				hexHash.append(String.format("%20x", b));//formatting each byte as a two-character hexadecimal string using string.format
 			}
+			// Limit the length of the hexadecimal string
+            int maxLength = 16; // Change this to your desired length
+            if (hexHash.length() > maxLength) {
+                hexHash.setLength(maxLength);
+            }
 			hashedId = hexHash.toString();
 			return hashedId;
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}
