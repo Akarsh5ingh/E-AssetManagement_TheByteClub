@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/Add_Assets.css">
+    <script src="../js/Add_Assets.js"></script>
+    <title>Add Assests</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="Admin_homepage.html">Users</a>
+        <a href="Add_Assests.html">Add Assets</a>
+        <a href="#overdue">Overdue</a>
+    </div>
+
+    <!-- <form id="myForm" class="form" onsubmit="return false">
+        <fieldset>
+            <legend><h1 class="heading">Add Your Assests</h1></legend>
+            <input type="text" id="Name" required placeholder="Name" pattern="[a-zA-Z]{3,25}">
+            <label for="category">Category</label>
+            <select id="category" name="category">
+                <option id="option" value="" disabled selected hidden>Select Category</option>
+                <option id="option" value="Laptop">Laptop</option>
+                <option id="option" value="Mobile">Mobile</option>
+                <option id="option" value="Tablet">Tablet</option>
+            </select>
+            <label for="description">Description</label>
+            <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+            <input type="submit" id="Submit" onclick="addAssets()">
+            
+        </fieldset>
+
+    </form> -->
+
+    <div class="wrapper">
+        <div class="form-container">
+          <div class="form-inner">
+            <form id="myForm" class="login">
+                <div class="title-text">
+                    <div class="title login">Add Assets</div>
+                </div>
+                <div class="field">
+                    <input type="text" id="Name" required placeholder="Name" pattern="[a-zA-Z]{3,25}">
+                  </div>
+                  <div class="field">
+                    <select id="category" name="category">
+                        <option id="option" value="" disabled selected hidden>Select Category</option>
+                        <option id="option" value="Laptop">Laptop</option>
+                        <option id="option" value="Mobile">Mobile</option>
+                        <option id="option" value="Tablet">Tablet</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <textarea name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+                  </div>
+              <div class="field btn">
+                <div class="btn-layer"></div>
+                <input type="submit" id="submit" onclick="addAssets()">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</body>
+</html>

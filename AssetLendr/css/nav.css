@@ -1,0 +1,35 @@
+.navbar {
+    background-color: #000000; /* Background color */
+    overflow: hidden; /* Hide overflowing content */
+    position: fixed; /* Fixed position at the top */
+    top: 0; /* Position it at the top of the page */
+    width: 100%; /* Full width */
+    text-align: right; /* Center-align the content horizontally */
+    padding-top: 1%; /* Padding around the text */
+}
+
+/* Style for the navigation bar links */
+.navbar a {
+    display: inline-block; /* Display them as inline-block elements */
+    color: #c94916; /* Text color */
+    text-align: center; /* Center-align text */
+    font-size: larger;
+    padding-top: 1%; /* Padding around the text */
+    padding-bottom: 1%; /* Padding around the text */
+    padding-left: 2%;
+    padding-right: 2%;
+    text-decoration: none; /* Remove underlines */
+}
+
+/* Style for the navigation bar links on hover */
+.navbar a:hover {
+    background-color: #dfdfdf; /* Background color on hover */
+    color: black; /* Text color on hover */
+}
+
+h1{
+  float: left;
+  color: #c94916;
+  margin-left: 10px;
+  font-family: broadway;
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>AssetLendr-Login</title>
+        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="/css/nav.css">
+        <script src="../js/login.js"></script>
+    </head>
+    <body>
+      
+      <div class="navbar">
+        <div><h1>AssetLendr</h1></div>
+        <a href="home.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="signup.html">Register</a>
+        <a href="assets.html">Assets</a>
+    </div>
+<div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Login</div>
+    </div>
+    <div class="form-container">
+      <div class="form-inner">
+        <form action="#" class="login" id="loginForm">
+            <div class="loginType">
+                <br>
+                <input type="radio" id="admin" value="admin" name="userType">
+                <label for="admin">Admin</label><br><br>
+                <input type="radio" id="user" value="user" name="userType">
+                <label for="user">User</label>
+              </div>
+          <div class="field">
+            <input id="email" type="text" placeholder="Email Address" required>
+          </div>
+          <div class="field">
+            <input id="password" type="password" placeholder="Password" required>
+          </div>
+          <div class="pass-link"><a href="#">Forgot password?</a></div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Login">
+          </div>
+          <div class="signup-link">Not a member? <a href="signup.html">Signup now</a></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

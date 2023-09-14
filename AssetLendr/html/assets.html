@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assets</title>
+    <link type="text/css" rel="stylesheet" href="/css/assets.css">
+</head>
+<body>
+<div class="navbar">
+    <div><h1>AssetLendr</h1></div>
+    <a href="home.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="signup.html">Register</a>
+    <a href="assetRequest.html">Assets</a>
+</div>
+<section class="section">
+    <div class="slider">
+        <div class="slide">
+            <input type="radio" name="radio-btn" id="radio1">
+            <input type="radio" name="radio-btn" id="radio2">
+            <input type="radio" name="radio-btn" id="radio3">
+
+            <div class="st first">
+                <img src="/images/mobile1.jpg" alt="" onclick="loadAssetPage('Mobile', 15, 75, '/images/mobile1.jpg')">
+            </div>
+
+            <div class="st">
+                <img src="/images/laptop1.png" alt="" id="laptop" onclick="loadAssetPage('Laptop', 7, 15, '/images/laptop1.png')">
+            </div>
+
+            <div class="st">
+                <img src="/images/book.jpg" alt="" onclick="loadAssetPage('Books', 10, 100, '/images/book.jpg')">
+            </div>
+
+            <div class="nav-auto">
+                <div class="a-b1"></div>
+                <div class="a-b2"></div>
+                <div class="a-b3"></div>
+            </div>
+        </div>
+
+        <div class="nav-m">
+            <label for="radio1" class="m-btn"></label>
+            <label for="radio2" class="m-btn"></label>
+            <label for="radio3" class="m-btn"></label>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript" src="/js/assets.js"></script>
+</body>
+</html>
