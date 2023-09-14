@@ -17,7 +17,7 @@ import java.util.Set;
 
 import com.codefury.eassetmanagement.exceptions.UserIDNotgeneratedException;
 import com.codefury.eassetmanagement.helper.MySQLHelper;
-import com.codefury.eassetmanagement.models.Administrator;
+import com.codefury.eassetmanagement.models.Asset;
 
 public class AdminDaoImpl implements AdminDao {
 
@@ -31,56 +31,15 @@ public class AdminDaoImpl implements AdminDao {
 	ResourceBundle resourceBundle;
 	PreparedStatement statement;
 	ResultSet resultSet;
-	private String role;
 	
 	public AdminDaoImpl() {
 		super();
 		this.resourceBundle = ResourceBundle.getBundle("com/codefury/eassetmanagement/resources/db");
-		this.role="Administrator";
-	}
-	
-	@Override
-	public Administrator createAdmin(String name, String telephone, String email, String password) {
-		String adminId = "ADMINID";
-		
-		Administrator admin=null;
-		// create statement
-		try {
-			conn = MySQLHelper.getConnection();
-			String query = this.resourceBundle.getString("createUser");
-			int rows=0;
-			this.statement = conn.prepareStatement(query);
-			this.statement.setString(1, adminId);
-			this.statement.setString(2, name);
-			this.statement.setString(3, this.role);
-			this.statement.setString(4, telephone);
-			this.statement.setString(5, email);
-			this.statement.setString(6, password);
-			this.statement.setBoolean(7, false);
-			System.out.println(this.statement);
-				
-			rows=this.statement.executeUpdate();
-			
-			if(rows>0) {
-				admin = new Administrator();
-				admin.setUserId(adminId);	
-				admin.setName(name);
-				admin.setEmail(email);
-				admin.setTelephone(telephone);
-				admin.setPassword(password);
-				return admin;
-			}
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			//create custom exception
-			System.out.println(e);
-		}
-		
-		return admin;
 	}
 
 	@Override
-	public boolean addNewAsset(String assetName, String assetType, String description, Date dateAdded, int lendingPeriod, double lateReturnFee, int noOfDaysBanned) {
+	public boolean addNewAsset(String assetName, String assetType, String description, Date dateAdded,
+			boolean isAvailable, int lendingPeriod, double lateReturnFee, int noOfDaysBanned) {
 		Date dueDate=null; //initially null
 		Date borrowedDate=null;
 		String borrowerId=null;
@@ -98,11 +57,11 @@ public class AdminDaoImpl implements AdminDao {
 			int rows=0;
 			this.statement = conn.prepareStatement(query);
 			this.statement.setString(1, userId);
-			this.statement.setString(3, assetName);
-			this.statement.setString(2, assetType);   //so that all case wont effect asset type
- 			this.statement.setString(4, description);
+			this.statement.setString(2, assetName);
+			this.statement.setString(3, assetType);
+			this.statement.setString(4, description);
 			this.statement.setDate(5, dateAdded);
-			this.statement.setBoolean(6, true);  //by default
+			this.statement.setBoolean(6, isAvailable);
 			this.statement.setInt(7, lendingPeriod);
 			this.statement.setDouble(8, lateReturnFee);
 			this.statement.setInt(9, noOfDaysBanned);
@@ -112,8 +71,6 @@ public class AdminDaoImpl implements AdminDao {
 			System.out.println(this.statement);
 				
 			rows=this.statement.executeUpdate();
-			if(rows>0)
-				return true;
 		} catch (ClassNotFoundException | SQLException e) {
 			//custom exception
 			throw new UserIDNotgeneratedException("User Id is not generated");
@@ -134,16 +91,6 @@ public class AdminDaoImpl implements AdminDao {
 		long userId = -1;
 		String finalUserId=null;
 		for (int attempt = 0; attempt < maxAttempts; attempt++) {
-<<<<<<< HEAD
-			userId = random.nextInt(maxUserId) + 10000000; // Generate a random 8 digit user ID
-			if (!usedIds.contains(userId)) {
-				usedIds.add(userId);
-				System.out.println("Generated User ID: " + userId);
-				finalUserId=String.valueOf(userId);
-				return finalUserId;
-			}
-		}
-=======
             userId = random.nextInt(maxUserId) + 10000000; //Generate a random 8 digit user ID 
             if (!hashedUserIds.contains(userId)) {
             	String userIdString =Long.toString(userId);
@@ -155,7 +102,6 @@ public class AdminDaoImpl implements AdminDao {
             }
 	}
         
->>>>>>> 4013569d1039b865dfe0749ae739382380694cfc
 
 		System.out.println("Failed to generate a unique User ID after " + maxAttempts + " attempts.");
 		return finalUserId;
@@ -190,25 +136,22 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public boolean validUser(String userName, String password) {
-		ResultSet rows=null;
-		try {
-			conn = MySQLHelper.getConnection();
-			String query = this.resourceBundle.getString("getUser");
-			
-			this.statement = conn.prepareStatement(query);
-			this.statement.setString(1, userName);
-			this.statement.setString(2, password);
-			this.statement.setString(3, this.role);  
-			System.out.println(this.statement);
-				
-			rows=this.statement.executeQuery();
-			if(rows!=null)
-				return true;
-		} catch (ClassNotFoundException | SQLException e) {
-			//create custom exception
-			System.out.println(e);
-		}
+	public boolean addNewAsset(Asset asset) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String generateUserId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addNewAsset(String userId, String assetName, String assetType, String description,
+			java.util.Date dateAdded, boolean isAvailable, int lendingPeriod, double lateReturnFee,
+			int noOfDaysBanned) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

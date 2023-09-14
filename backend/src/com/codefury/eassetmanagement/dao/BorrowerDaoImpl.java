@@ -4,11 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Random;
@@ -26,42 +25,14 @@ public class BorrowerDaoImpl implements BorrowerDao {
 	ResourceBundle resourceBundle;
 	PreparedStatement statement;
 	ResultSet resultSet;
-	private Set<String> hashedUserIds;
-	private static Set<Long> usedIds;
-	private Random random;
-	private String role;
+	private Set<String> hashedUserIds = new HashSet<>();
+	private Set<Long> usedIds = new HashSet<>();
+	private Random random = new Random();
 
 
 	public BorrowerDaoImpl() {
 		super();
 		this.resourceBundle = ResourceBundle.getBundle("com/codefury/eassetmanagement/resources/db");
-		this.hashedUserIds = new HashSet<>();
-		this.usedIds = new HashSet<>();
-		this.random = new Random();
-		this.role="Borrower";
-	}
-	
-	@Override
-	public boolean validUser(String userName, String password) {
-		ResultSet rows=null;
-		try {
-			conn = MySQLHelper.getConnection();
-			String query = this.resourceBundle.getString("getUser");
-			
-			this.statement = conn.prepareStatement(query);
-			this.statement.setString(1, userName);
-			this.statement.setString(2, password);
-			this.statement.setString(3, this.role);  
-			System.out.println(this.statement);
-				
-			rows=this.statement.executeQuery();
-			if(rows!=null)
-				return true;
-		} catch (ClassNotFoundException | SQLException e) {
-			//create custom exception
-			System.out.println(e);
-		}
-		return false;
 	}
 
 
@@ -77,7 +48,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			this.statement = conn.prepareStatement(query);
 			this.statement.setString(1, borrowerId);
 			this.statement.setString(2, name);
-			this.statement.setString(3, this.role);
+			this.statement.setString(3, "Borrower");
 			this.statement.setString(4, telephone);
 			this.statement.setString(5, email);
 			this.statement.setString(6, password);
@@ -85,10 +56,6 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			System.out.println(this.statement);
 				
 			rows=this.statement.executeUpdate();
-			
-			if(rows>0)
-				return true;
-			
 		} catch (ClassNotFoundException | SQLException e) {
 			//create custom exception
 			 throw new UserBannedException("User is banned due to overdue assets");
@@ -100,7 +67,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 	public Asset borrowAsset(Borrower borrower, String assetType) {
 		// go through asset table
 		// search if user has any active asset that is overdue
-		System.out.println("User banned: "+isUserBanned(borrower.getUserId()));
+		System.out.println(isUserBanned(borrower.getUserId()));
 		if(isUserBanned(borrower.getUserId()))
 			return null;
 		// check if any asset is borrowed
@@ -117,45 +84,13 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			e.printStackTrace();
 		}
 		
-		if(result != null) {
+		if(result!=null) {
 			Asset asset=getFirstAsset(result, borrower.getUserId());
-			if(asset!=null) {
-				//update table
-				updateAsset(asset, borrower);
-			}
-			
 			return asset;
 		}
-		
+	
 		return null;
 	}
-
-	private void updateAsset(Asset asset, Borrower borrower) {
-		try {
-			conn = MySQLHelper.getConnection();
-			String query = this.resourceBundle.getString("updateAsset");
-			int rows=0;
-			this.statement = conn.prepareStatement(query);
-			this.statement.setBoolean(1, false);
-			this.statement.setString(2, borrower.getUserId());
-			
-			Date dateAssigned = Date.valueOf(LocalDate.now());
-			this.statement.setDate(3, (java.sql.Date) dateAssigned);
-			
-			Date dueDate = getDueDate(dateAssigned, asset.getLendingPeriod());
-			this.statement.setDate(4, (java.sql.Date) dueDate);
-			
-			this.statement.setString(5, asset.getUniqueId());
-			System.out.println(this.statement);
-				
-			this.statement.executeUpdate();
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			//create custom exception
-			System.out.println(e);
-		}
-	}
-
 
 	@Override
 	public double viewDueAmount() {
@@ -178,7 +113,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			String query = this.resourceBundle.getString("getBorrowerAssets");
 			this.statement = conn.prepareStatement(query);
 			this.statement.setString(1, userId);
-			System.out.println(this.statement);
+//			System.out.println(this.statement);
 			result = this.statement.executeQuery();
 //			System.out.println(result);
 			
@@ -199,8 +134,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 	private Asset getFirstAsset(ResultSet assetList, String borrowerid) {
 		Asset asset=new Asset();
 		try {
-			if(assetList.next()) {
-				System.out.println("Asset details: "+assetList.toString());
+			while(assetList.next()) {
 				asset.setUniqueId(assetList.getString("UniqueId"));
 				asset.setAssetName(assetList.getString("AssetName"));
 				asset.setAssetType(assetList.getString("AssetType"));
@@ -213,11 +147,9 @@ public class BorrowerDaoImpl implements BorrowerDao {
 				//set borrower id
 				asset.setBorrowerId(borrowerid);
 				//set borrowedDate to current date
-				asset.setBorrowedDate(Date.valueOf(LocalDate.now()));
+				asset.setBorrowedDate(new Date());
 				//calculate dueDate
-				asset.setDueDate(getDueDate((Date) asset.getBorrowedDate(), asset.getLendingPeriod()));
-				
-				return asset;
+				asset.setDueDate(getDueDate(asset.getBorrowedDate(), asset.getLendingPeriod()));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -234,8 +166,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 			String query = this.resourceBundle.getString("getAvailableAssets");
 			this.statement = conn.prepareStatement(query);
 			this.statement.setString(1, AssetType);
-			this.statement.setBoolean(2, true);
-			System.out.println("Get all: "+this.statement);
+//			System.out.println(this.statement);
 			result = this.statement.executeQuery();			
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -254,7 +185,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
 				Date borrowedDate = assetList.getDate("BorrowedDate");
 				int lendingPeriod = assetList.getInt("LendingPeriod");
 				Date dueDate = assetList.getDate("DueDate");
-				if(isOverDue(Date.valueOf(LocalDate.now()), dueDate))
+				if(isOverDue(new Date(), dueDate))
 				{
 					return true;
 				}
@@ -287,7 +218,7 @@ public class BorrowerDaoImpl implements BorrowerDao {
         calendar.add(Calendar.DAY_OF_MONTH, lendingPeriod);
 
         // Get the new date
-        dueDate = new Date(calendar.getTime().getTime());
+        dueDate =  (Date) calendar.getTime();
 
         return dueDate;	
 	}
@@ -304,7 +235,6 @@ public class BorrowerDaoImpl implements BorrowerDao {
 				usedIds.add(userId);
 				System.out.println("Generated User ID: " + userId);
 				finalUserId=String.valueOf(userId);
-				return finalUserId;
 			}
 		}
 
